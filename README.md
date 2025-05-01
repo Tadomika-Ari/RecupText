@@ -3,8 +3,8 @@
 Simple code pour recuperer le texte d'un site web avec traduction automatique
 
 ## Features
-- Récupere le texte totale d'une page grace seulement à un lin
-- Seulement pour traduire en Francais.
+- Récupere le texte totale d'une page grace seulement à un lien
+- Peut désormais traduire tout type de language (dans la limite de deepl bien sur)
 - Créer une version traduite et non traduite 
 
 
@@ -22,6 +22,10 @@ pip install beautifulsoup4
 ``` bash
 pip install deep-translator
 ```
+``` bash
+pip install pyfiglet
+```
+
 
 
 ## Contribution
