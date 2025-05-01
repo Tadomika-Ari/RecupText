@@ -2,6 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 from deep_translator import GoogleTranslator
 import re
+import pyfiglet
+
+print("")
+banniere = pyfiglet.figlet_format("RecupText", font= "slant")
+print (banniere)
+print ("Bienvenue sur RecupText !")
+print ("")
 
 # En-têtes pour simuler un navigateur
 headers = {
@@ -30,13 +37,36 @@ def extraire_numero_chapitre(url):
         return match.group(1)
     return "inconnu"
 
+language_entree = "en"  # Langue d'entrée par défaut
+language_sortie = "fr"  # Langue de sortie par défaut
+
 # Boucle principale pour demander des liens à l'utilisateur
 while True:
     # Demande à l'utilisateur d'entrer un lien ou de taper "arret" pour quitter
-    url = input("Entrez le lien du chapitre (ou tapez 'arret' pour quitter) : ").strip()
+    print("")
+    url = input("Changer les parametres de traduction en tappant 'para'. Sinon entrez simplement le lien le lien du chapitre (ou tapez 'arret' pour quitter) : ").strip()
+
+    # changer les parametre du traducteur
+    if url.lower() == "para":
+        print("")
+        print("Paramètres de RecupText ! Ici vous pouvez changer la langue d'entrée et de sortie du traducteur qui est inclu directement.")
+        print("Langue d'entrée :")
+        print(language_entree)
+        print("Traduire vers :")
+        print (language_sortie)
+        print("Pour changer la langue d'entrée et de sortie, taper 'changer'")
+        print("")
+        continue
+
+    if url.lower() == "changer":
+        language_entree = input("Entrez la langue d'entrée (par exemple, 'en' pour anglais) : ").strip()
+        language_sortie = input("Entrez la langue de sortie (par exemple, 'fr' pour français) : ").strip()
+        print(f"Langue d'entrée changée en '{language_entree}' et langue de sortie changée en '{language_sortie}'.")
+        continue
+        
     
-    if url.lower() == "arret":
-        print("Arrêt du programme.")
+    if url.lower() == "arret" or url.lower() == "stop" or url.lower() == "exit" or url.lower() == "quitter":
+        print("Merci d'avoir utilisé RecupText !")
         break
 
     # Récupération du contenu HTML de la page
@@ -63,7 +93,7 @@ while True:
         
         # Traduit chaque morceau et les combine
         texte_traduit = ""
-        traducteur = GoogleTranslator(source='en', target='fr')
+        traducteur = GoogleTranslator(source=language_entree, target=language_sortie)
         for morceau in morceaux:
             texte_traduit += traducteur.translate(morceau) + "\n"
         
